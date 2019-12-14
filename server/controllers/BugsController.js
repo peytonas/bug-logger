@@ -9,8 +9,8 @@ export default class BugController {
       .get("/bugs", this.getAll)
       .get("/bugs/:id", this.getById)
       .post("/bugs", this.create)
-    // .put("/bugs/:id", this.editBug)
-    // .delete("/bugs/:id", this.toggleBug)
+      .put("/bugs/:id", this.editBug)
+      .delete("/bugs/:id", this.toggleBug)
   }
 
   async getAll(req, res, next) {
@@ -23,7 +23,6 @@ export default class BugController {
   }
   async create(req, res, next) {
     try {
-      req.body.user = req.body.creator
       let data = await bugService.create(req.body)
       return res.send(data)
     } catch (error) { next(error) }
@@ -36,21 +35,18 @@ export default class BugController {
       next(error)
     }
   }
-  // async editBug(req, res, next) {
-  //   try {
-  //     let data = await bugService.findOneAndUpdate({ _id: req.params.id }, req.body, { new: true })
-  //     if (data) {
-  //       return res.send(data)
-  //     }
-  //     throw new Error("invalid ID")
-  //   } catch (error) {
-  //     next(error)
-  //   }
-  // }
-  // async toggleBug(req, res, next) {
-  //   try {
-  //     let data = await bugService.findOneAndRemove({ _id: req.params.id })
-  //     res.send("deleted!")
-  //   } catch (error) { next(error) }
-  // }
+  async editBug(req, res, next) {
+    try {
+      let data = await bugService.edit(req.params.id, req.body)
+      return res.send(data)
+    } catch (error) {
+      next(error)
+    }
+  }
+  async toggleBug(req, res, next) {
+    try {
+      let data = await bugService.delete(req.params.id)
+      return res.send(data)
+    } catch (error) { next(error) }
+  }
 }

@@ -15,6 +15,16 @@ class BugService {
   async getById(id) {
     return await _repository.findById(id)
   }
+  async edit(id, update) {
+    await _repository.findOneAndUpdate({ _id: id }, update, {
+      new: true
+    })
+  }
+  async delete(id, update) {
+    await _repository.findOneAndUpdate(id, { closed: true }, {
+      new: true
+    })
+  }
 }
 
 const bugService = new BugService();
