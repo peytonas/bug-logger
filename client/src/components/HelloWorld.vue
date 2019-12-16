@@ -17,9 +17,7 @@
       <th>Status</th>
       <th>Last Modified</th>
     </tr>
-    <tr>
-      <Bug />
-    </tr>
+    <Bug v-for="bug in bugs" :bugProp="bug" :key="bug._id" />
   </table>
 </body>
 </template>
@@ -34,7 +32,11 @@ export default {
   props: {
     msg: String
   },
-  computed: {},
+  computed: {
+    bugs() {
+      return this.$store.state.bugs;
+    }
+  },
   components: { Bug }
 };
 </script>

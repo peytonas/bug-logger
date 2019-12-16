@@ -1,6 +1,9 @@
 <template>
   <tr class="bugComponent">
-    <td v-for="bug in bugs" :bugProp="bug" :key="bug._id">{{bug.title}}</td>
+    <td>{{bugProp.title}}</td>
+    <td>{{bugProp.reportedBy}}</td>
+    <td id="status">{{bugProp.closed}}</td>
+    <td>{{bugProp.createdAt}}</td>
   </tr>
 </template>
 <script>
@@ -10,6 +13,14 @@ export default {
     bugs() {
       return this.$store.state.bugs;
     }
-  }
+  },
+  methods: {
+    status() {
+      if (bugProp.closed == false) {
+        bugProp.closed = "open";
+      }
+    }
+  },
+  props: ["bugProp"]
 };
 </script>
