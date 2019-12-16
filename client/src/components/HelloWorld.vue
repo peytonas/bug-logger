@@ -1,20 +1,41 @@
 <template>
-  <div class="hello">
-    <h1>{{ msg }}</h1>
-    <router-link to="/about">
-      <span class="icon">
-        <i class="fas fa-exclamation-circle"></i>
-      </span>
-    </router-link>
+<body>
+  <div class="row">
+    <div class="col hello">
+      <h1>{{ msg }}</h1>
+      <!-- <router-link to="/about">
+        <span class="icon">
+          <i class="fas fa-exclamation-circle"></i>
+        </span>
+      </router-link>-->
+    </div>
   </div>
+  <table>
+    <tr>
+      <th>Title</th>
+      <th>Reported By</th>
+      <th>Status</th>
+      <th>Last Modified</th>
+    </tr>
+    <tr>
+      <Bug />
+    </tr>
+  </table>
+</body>
 </template>
 
 <script>
+import Bug from "../components/BugComponent.vue";
 export default {
   name: "HelloWorld",
+  mounted() {
+    this.$store.dispatch("getBugs");
+  },
   props: {
     msg: String
-  }
+  },
+  computed: {},
+  components: { Bug }
 };
 </script>
 
@@ -40,5 +61,21 @@ li {
 }
 a {
   color: #42b983;
+}
+table {
+  font-family: arial, sans-serif;
+  border-collapse: collapse;
+  width: 100%;
+}
+
+td,
+th {
+  border: 1px solid #dddddd;
+  text-align: left;
+  padding: 8px;
+}
+
+tr:nth-child(even) {
+  background-color: #dddddd;
 }
 </style>

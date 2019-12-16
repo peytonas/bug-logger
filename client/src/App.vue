@@ -11,19 +11,91 @@
         </router-link>
       </div>
       <div class="col-1">
-        <span class="icon">
+        <span class="icon" data-toggle="modal" data-target=".bd-example-modal-lg">
           <i class="fas fa-exclamation-circle"></i>
         </span>
       </div>
-    </div>
-    <div class="row">
-      <div class="col-4 text-left">
-        <router-view />
+      <div
+        class="modal fade bd-example-modal-lg"
+        tabindex="-1"
+        role="dialog"
+        aria-labelledby="myLargeModalLabel"
+        aria-hidden="true"
+      >
+        <div class="modal-dialog modal-lg">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h5 class="modal-title">Report New Bug:</h5>
+              <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+              </button>
+            </div>
+            <div class="modal-body">
+              <form @submit.prevent="addBug()">
+                <div class="form-group">
+                  <label>title</label>
+                  <input
+                    class="form-control"
+                    placeholder="title..."
+                    v-model="newBug.title"
+                    required
+                  />
+                </div>
+                <div class="form-group">
+                  <label>reported by</label>
+                  <input
+                    class="form-control"
+                    placeholder="name..."
+                    v-model="newBug.reportedBy"
+                    required
+                  />
+                </div>
+                <div class="form-group">
+                  <label>comment</label>
+                  <input
+                    class="form-control"
+                    placeholder="input type..."
+                    v-model="newBug.description"
+                    required
+                  />
+                </div>
+                <div class="modal-footer">
+                  <button type="submit" class="btn btn-primary">Submit Bug</button>
+                </div>
+              </form>
+            </div>
+          </div>
+        </div>
       </div>
     </div>
+    <router-view />
   </div>
 </template>
-
+<script>
+export default {
+  name: "navbar",
+  methods: {
+    addBug() {
+      console.log(this.$store.state.bugs.length);
+      this.$store.dispatch("create", this.newBug);
+      this.newBug = {
+        title: "",
+        reportedBy: "",
+        description: ""
+      };
+    }
+  },
+  data() {
+    return {
+      newBug: {
+        title: "",
+        reportedBy: "",
+        description: ""
+      }
+    };
+  }
+};
+</script>
 <style>
 #app {
   font-family: "Avenir", Helvetica, Arial, sans-serif;
