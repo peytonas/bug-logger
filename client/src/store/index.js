@@ -8,7 +8,7 @@ Vue.use(Vuex)
 let base = window.location.host.includes('localhost:8080') ? '//localhost:3000/' : '/'
 
 let api = axios.create({
-  baseURL: base + 'api/',
+  baseURL: base + 'api',
   timeout: 3000,
   withCredentials: true
 })
@@ -41,17 +41,57 @@ export default new Vuex.Store({
   actions: {
     async getBugs({ commit, dispatch, state }) {
       try {
-        let bugs = await api.get(`/bugs`)
+        let bugs = await api.get('/bugs')
         commit('setBugs', bugs.data)
-        return state.bugs
       } catch (error) {
         console.error(error)
       }
     },
     async create({ commit, dispatch }, payload) {
       try {
-        let res = await api.post('bugs', payload)
+        let res = await api.post('/bugs', payload)
         dispatch('getBugs')
+      } catch (error) {
+        console.error(error)
+      }
+    },
+    async getById({ commit, dispatch }, payload) {
+      try {
+        let res = await api.get('/bugs/' + payload)
+        if (res) {
+          commit('setActiveBug', res.data)
+        }
+      } catch (error) {
+        console.error(error)
+      }
+    },
+    async edit({ commit, dispatch }, payload) {
+      try {
+        await api.put('/bugs/' + payload, this.state.activeBug)
+        dispatch('getById', payload)
+      } catch (error) {
+        console.error(error)
+      }
+    },
+    async delete({ commit, dispatch }, payload) {
+      try {
+        await api.delete('/bugs/' + payload)
+      } catch (error) {
+        console.error(error)
+      }
+    },
+    async getNotes({ commit, dispatch }, payload) {
+      try {
+        let res = await api.get('/bugs/' + payload + '/notes')
+        commit('setNotes', res.data)
+      } catch (error) {
+        console.error(error)
+      }
+    },
+    async createNote({ commit, dispatch }, payload) {
+      try {
+        await api.post('/notes', payload)
+        dispatch('getNotes', payload.bug)
       } catch (error) {
         console.error(error)
       }

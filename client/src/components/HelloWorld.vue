@@ -3,11 +3,6 @@
   <div class="row">
     <div class="col hello">
       <h1>{{ msg }}</h1>
-      <!-- <router-link to="/about">
-        <span class="icon">
-          <i class="fas fa-exclamation-circle"></i>
-        </span>
-      </router-link>-->
     </div>
   </div>
   <table>
@@ -23,7 +18,7 @@
 </template>
 
 <script>
-import Bug from "../components/BugComponent.vue";
+import Bug from "../components/Bug.vue";
 export default {
   name: "HelloWorld",
   mounted() {
@@ -42,7 +37,7 @@ export default {
 </script>
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
-<style scoped>
+<style>
 #home {
   font-family: "Avenir", Helvetica, Arial, sans-serif;
   -webkit-font-smoothing: antialiased;

@@ -76,7 +76,6 @@ export default {
   name: "navbar",
   methods: {
     addBug() {
-      console.log(this.$store.state.bugs.length);
       this.$store.dispatch("create", this.newBug);
       this.newBug = {
         title: "",
