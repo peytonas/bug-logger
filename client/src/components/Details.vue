@@ -15,7 +15,7 @@
         <h1>{{bug.reportedBy}}</h1>
       </div>
       <div class="col-4 text-center">
-        <h1 class="status open">{{bug.closed}}</h1>
+        <h1 class="status open">{{this.status}}</h1>
       </div>
     </div>
     <div class="deets row ml-1">
@@ -99,12 +99,12 @@ export default {
   },
   data() {
     return {
+      status: this.$store.state.activeBug.closed ? "closed" : "open",
       newNote: {
         content: "",
         bug: "",
         reportedBy: ""
-      },
-      status: this.$store.state.activeBug.closed ? "closed" : "open"
+      }
     };
     if (status == "closed") {
       let elem = document.getElementsByClassName("status");

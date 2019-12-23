@@ -4,7 +4,7 @@
     <th>{{noteProp.content}}</th>
     <th>{{this.newDate}}</th>
     <th class="text-center">
-      <i class="fas fa-dumpster" @click="deleteNote(noteProp.id)"></i>
+      <i class="fas fa-dumpster" @click.prevent="deleteNote(noteProp.id)"></i>
     </th>
   </tr>
 </template>
@@ -28,7 +28,11 @@ export default {
   },
   methods: {
     deleteNote() {
-      this.$store.dispatch("delete", this.noteprop.id);
+      let note = {
+        bugId: this.$route.params.id,
+        id: this.noteProp._id
+      };
+      this.$store.dispatch("deleteNote", note);
     }
   },
   props: ["noteProp"]
