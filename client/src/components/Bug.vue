@@ -2,7 +2,8 @@
   <tr class="bug" @click="selectBug(bugProp._id)">
     <td>{{bugProp.title}}</td>
     <td>{{bugProp.reportedBy}}</td>
-    <td class="status open">{{this.status}}</td>
+    <td class="status open" v-if="bugProp.closed == false">{{this.status}}</td>
+    <td class="status closed" v-else>{{this.status}}</td>
     <td>{{this.newDate}}</td>
   </tr>
 </template>
@@ -20,11 +21,6 @@ export default {
         .split("T")
         .join(" ")
     };
-    if ("closed") {
-      let elem = document.getElementsByClassName("status");
-      elem.classList.remove("open");
-      elem.classList.add("closed");
-    }
   },
   methods: {
     selectBug(bugPropId) {

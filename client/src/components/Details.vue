@@ -6,7 +6,7 @@
         <h1>{{bug.title}}</h1>
       </div>
       <div class="col-2 text-right">
-        <input id="check" class="form-check-input" type="checkbox" @click="toggle()" />
+        <!-- <input id="check" class="form-check-input" type="checkbox" @click="toggle()" /> -->
       </div>
     </div>
     <div class="deets row justify-content-between ml-1">
@@ -15,7 +15,8 @@
         <h1>{{bug.reportedBy}}</h1>
       </div>
       <div class="col-4 text-center">
-        <h1 class="status open">{{this.status}}</h1>
+        <h1 class="status open" v-if="bug.closed == false">{{this.status}}</h1>
+        <h1 class="status closed" v-else>{{this.status}}</h1>
       </div>
     </div>
     <div class="deets row ml-1">
@@ -106,11 +107,6 @@ export default {
         reportedBy: ""
       }
     };
-    if (status == "closed") {
-      let elem = document.getElementsByClassName("status");
-      elem.classList.remove("open");
-      elem.classList.add("closed");
-    }
   },
   computed: {
     bug() {
